@@ -9,6 +9,7 @@ import { ThemeProvider } from '@mui/material/styles'
 import CssBaseline from '@mui/material/CssBaseline'
 import { LocalizationProvider } from '@mui/lab'
 import AdapterDateFns from '@mui/lab/AdapterDateFns'
+import { MoralisProvider, useMoralis } from 'react-moralis'
 import { RTL } from '../components/rtl'
 import { SettingsButton } from '../components/settings-button'
 import { SplashScreen } from '../components/splash-screen'
@@ -46,7 +47,7 @@ const App = (props) => {
 	return (
 		<CacheProvider value={emotionCache}>
 			<Head>
-				<title>SuperteamDAO</title>
+				<title>{process.env.SITE_NAME}</title>
 				<meta
 					name="viewport"
 					content="initial-scale=1, width=device-width"
@@ -70,7 +71,27 @@ const App = (props) => {
 											<CssBaseline />
 											<Toaster position="top-center" />
 											<SettingsButton />
-											<AuthConsumer>
+											<MoralisProvider
+												appId={
+													process.env
+														.NEXT_PUBLIC_MORALIS_APP_ID
+												}
+												serverUrl={
+													process.env
+														.NEXT_PUBLIC_MORALIS_SERVER_URL
+												}
+											>
+												{useMoralis.isAuthenticating ? (
+													<SplashScreen />
+												) : (
+													getLayout(
+														<Component
+															{...pageProps}
+														/>
+													)
+												)}
+											</MoralisProvider>
+											{/* <AuthConsumer>
 												{(auth) =>
 													!auth.isInitialized ? (
 														<SplashScreen />
@@ -82,7 +103,7 @@ const App = (props) => {
 														)
 													)
 												}
-											</AuthConsumer>
+											</AuthConsumer> */}
 										</RTL>
 									</ThemeProvider>
 								)}

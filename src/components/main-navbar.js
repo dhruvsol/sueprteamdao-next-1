@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import NextLink from 'next/link'
 import {
@@ -9,11 +10,37 @@ import {
 	Link,
 	Toolbar,
 } from '@mui/material'
+import { useMoralis } from 'react-moralis'
 import { Menu as MenuIcon } from '../icons/menu'
 import { Logo } from './logo'
 
 export const MainNavbar = (props) => {
 	const { onOpenSidebar } = props
+
+	const {
+		isAuthenticated,
+		authenticate,
+		isAuthenticating,
+		user,
+		logout,
+		isLoggingOut,
+	} = useMoralis()
+
+	// const [isPhantom, setIsPhantom] = useState(false)
+
+	// useEffect(() => {
+	// 	getProvider()
+	// }, [])
+
+	// const getProvider = () => {
+	// 	if ('solana' in window) {
+	// 		const provider = window.solana
+	// 		if (provider.isPhantom) {
+	// 			setIsPhantom(true)
+	// 		}
+	// 	}
+	// 	console.log('getProvider', isPhantom)
+	// }
 
 	return (
 		<AppBar
@@ -93,16 +120,31 @@ export const MainNavbar = (props) => {
 								Documentation
 							</Link>
 						</NextLink>
-						<Button
-							component="a"
-							href="https://material-ui.com/store/items/devias-kit-pro"
-							size="medium"
-							sx={{ ml: 2 }}
-							target="_blank"
-							variant="contained"
-						>
-							Connect Wallet
-						</Button>
+						{isAuthenticated ? (
+							<Button
+								component="a"
+								onClick={logout}
+								size="medium"
+								sx={{ ml: 2 }}
+								target="_blank"
+								variant="contained"
+								disabled={isLoggingOut}
+							>
+								Logout
+							</Button>
+						) : (
+							<Button
+								component="a"
+								onClick={authenticate}
+								size="medium"
+								sx={{ ml: 2 }}
+								target="_blank"
+								variant="contained"
+								disabled={isAuthenticating}
+							>
+								Login
+							</Button>
+						)}
 					</Box>
 				</Toolbar>
 			</Container>
