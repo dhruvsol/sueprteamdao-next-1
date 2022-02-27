@@ -26,21 +26,20 @@ export const MainNavbar = (props) => {
 		isLoggingOut,
 	} = useMoralis()
 
-	// const [isPhantom, setIsPhantom] = useState(false)
+	const [isPhantom, setIsPhantom] = useState(false)
 
-	// useEffect(() => {
-	// 	getProvider()
-	// }, [])
+	const getProvider = () => {
+		if ('solana' in window) {
+			const provider = window.solana
+			if (provider.isPhantom) {
+				setIsPhantom(true)
+			}
+		}
+	}
 
-	// const getProvider = () => {
-	// 	if ('solana' in window) {
-	// 		const provider = window.solana
-	// 		if (provider.isPhantom) {
-	// 			setIsPhantom(true)
-	// 		}
-	// 	}
-	// 	console.log('getProvider', isPhantom)
-	// }
+	useEffect(() => {
+		getProvider()
+	}, [])
 
 	return (
 		<AppBar
@@ -130,19 +129,25 @@ export const MainNavbar = (props) => {
 								variant="contained"
 								disabled={isLoggingOut}
 							>
-								Logout
+								Logout {user.get('solAddress').substr(0, 4)}...
+								{user.get('solAddress').substr(-4, 4)}
 							</Button>
 						) : (
 							<Button
 								component="a"
-								onClick={authenticate}
+								{...(isPhantom
+									? {
+											onClick: () =>
+												authenticate({ type: 'sol' }),
+									  }
+									: { href: 'https://phantom.app/' })}
 								size="medium"
 								sx={{ ml: 2 }}
 								target="_blank"
 								variant="contained"
 								disabled={isAuthenticating}
 							>
-								Login
+								{isPhantom ? 'Login' : 'Get Phantom'}
 							</Button>
 						)}
 					</Box>

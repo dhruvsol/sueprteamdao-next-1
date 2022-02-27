@@ -44,6 +44,7 @@
     "@mui/system": "^5.4.0",
     "@react-pdf/renderer": "^2.1.1",
     "@reduxjs/toolkit": "^1.7.1",
+    "@web3auth/web3auth": "^0.3.2",
     "apexcharts": "^3.33.0",
     "aws-amplify": "^4.3.14",
     "date-fns": "^2.28.0",
