@@ -134,12 +134,14 @@ export const MainNavbar = (props) => {
 						) : (
 							<Button
 								component="a"
-								{...(isPhantom
+								{...(!isPhantom
 									? {
+											href: 'https://phantom.app/',
+									  }
+									: {
 											onClick: () =>
 												authenticate({ type: 'sol' }),
-									  }
-									: { href: 'https://phantom.app/' })}
+									  })}
 								size="medium"
 								sx={{ ml: 2 }}
 								target="_blank"
