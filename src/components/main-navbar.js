@@ -129,8 +129,7 @@ export const MainNavbar = (props) => {
 								variant="contained"
 								disabled={isLoggingOut}
 							>
-								Logout {user.get('solAddress').substr(0, 4)}...
-								{user.get('solAddress').substr(-4, 4)}
+								Logout
 							</Button>
 						) : (
 							<Button

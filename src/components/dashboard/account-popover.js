@@ -21,10 +21,10 @@ import { SwitchHorizontalOutlined as SwitchHorizontalOutlinedIcon } from '../../
 export const AccountPopover = (props) => {
 	const { anchorEl, onClose, open, ...other } = props
 	const router = useRouter()
-	const { logout } = useMoralis()
+	const { user, logout } = useMoralis()
 	// To get the user from the authContext, you can use
 	// `const { user } = useAuth();`
-	const user = {
+	const _user = {
 		avatar: '/static/mock-images/avatars/avatar-anika_visser.png',
 		name: 'Anika Visser',
 	}
@@ -62,7 +62,7 @@ export const AccountPopover = (props) => {
 				}}
 			>
 				<Avatar
-					src={user.avatar}
+					src={_user.avatar}
 					sx={{
 						height: 40,
 						width: 40,
@@ -75,9 +75,10 @@ export const AccountPopover = (props) => {
 						ml: 1,
 					}}
 				>
-					<Typography variant="body1">{user.name}</Typography>
+					<Typography variant="body1">{_user.name}</Typography>
 					<Typography color="textSecondary" variant="body2">
-						Acme Inc
+						{user.get('solAddress').substr(0, 4)}...
+						{user.get('solAddress').substr(-4, 4)}
 					</Typography>
 				</Box>
 			</Box>
