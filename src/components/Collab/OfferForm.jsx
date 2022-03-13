@@ -7,7 +7,21 @@ import {
   TextField,
   Button,
 } from "@mui/material";
-export const OfferForm = ({ skills }) => {
+export const OfferForm = () => {
+  const Skills = [
+    {
+      id: "0",
+      skill: "Devloper",
+    },
+    {
+      id: "1",
+      skill: "Writer",
+    },
+    {
+      id: "2",
+      skill: "Designer",
+    },
+  ];
   return (
     <>
       <Box>
@@ -33,8 +47,8 @@ export const OfferForm = ({ skills }) => {
           <Autocomplete
             multiple
             id="tags-standard"
-            options={skills}
-            getOptionLabel={(option) => option.title}
+            options={Skills}
+            getOptionLabel={(option) => option.skill}
             renderInput={(params) => (
               <TextField
                 {...params}
@@ -46,12 +60,6 @@ export const OfferForm = ({ skills }) => {
             )}
           />
         </Stack>
-        <Input
-          sx={{ padding: "1rem" }}
-          type="tel"
-          placeholder="Offered XP Ratio"
-          onChange={(e) => setRatio(e.target.value)}
-        />
       </Box>
       <Input
         sx={{ padding: "1rem" }}

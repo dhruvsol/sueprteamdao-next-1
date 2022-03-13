@@ -58,7 +58,26 @@ export const MainLayout = ({ children }) => {
         Welcome to Collab Dashboard
       </Typography>
       {/* <Typography>{usrAddress}</Typography> */}
-
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          paddingBottom: "3rem",
+        }}
+      >
+        {isAuthenticated && (
+          <Button
+            onClick={() => {
+              router.push("/Collab/Collab");
+            }}
+            size="medium"
+            variant="outlined"
+            sx={{ ml: 2 }}
+          >
+            Get started
+          </Button>
+        )}
+      </Box>
       <Box
         sx={{
           alignItems: "center",
@@ -93,22 +112,6 @@ export const MainLayout = ({ children }) => {
             disabled={isAuthenticating}
           >
             {isPhantom ? "Login" : "Get Phantom"}
-          </Button>
-        )}
-      </Box>
-      <Box
-        sx={{ display: "flex", justifyContent: "center", paddingTop: "3rem" }}
-      >
-        {isAuthenticated && (
-          <Button
-            onClick={() => {
-              router.push("/Collab/Collab");
-            }}
-            size="medium"
-            variant="outlined"
-            sx={{ ml: 2 }}
-          >
-            Get started
           </Button>
         )}
       </Box>

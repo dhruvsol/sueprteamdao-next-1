@@ -9,6 +9,7 @@ import {
   TextField,
   Tab,
   Tabs,
+  Avatar,
 } from "@mui/material";
 import PropTypes from "prop-types";
 
@@ -16,7 +17,7 @@ import CardCollab from "../../components/Collab/Card";
 import axios from "axios";
 import { MainNavbar } from "../../components/main-navbar";
 import { OfferForm } from "../../components/Collab/OfferForm";
-
+import { Phot } from "./tanmay.jpg";
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -125,33 +126,55 @@ const Collab = () => {
   return (
     <>
       <MainNavbar />
-      <Typography
+      <Box
         sx={{
           paddingTop: "5rem",
           display: "flex",
-          justifyContent: "center",
-          fontSize: "2rem",
+          paddingLeft: "4rem",
+          paddingBottom: "2rem",
+          alignItems: "center",
         }}
       >
-        User Collab Profile
-      </Typography>
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "end",
-          paddingTop: "3rem",
-          paddingBottom: "3rem",
-          width: "80%",
-        }}
-      >
-        <Button
-          onClick={() => {
-            handleClickOpen();
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            height: "8rem",
           }}
-          variant="outlined"
         >
-          Invite
-        </Button>
+          {/* <Image src={Phot} alt="profile" width="90" height="90" /> */}
+          <Avatar
+            sx={{
+              width: "5rem",
+              height: "5rem",
+            }}
+            alt="Tanmay"
+            src={Phot}
+          />
+
+          <Typography
+            sx={{
+              paddingLeft: "2rem",
+              fontSize: "2rem",
+            }}
+          >
+            UserName
+          </Typography>
+        </Box>
+        <Box
+          sx={{
+            paddingLeft: "4rem",
+          }}
+        >
+          <Button
+            onClick={() => {
+              handleClickOpen();
+            }}
+            variant="outlined"
+          >
+            Invite
+          </Button>
+        </Box>
       </Box>
       <Dialog
         open={open}
@@ -187,13 +210,13 @@ const Collab = () => {
         <Box
           sx={{
             width: "25rem",
-            height: "10rem",
+            height: "9rem",
             display: "flex",
             justifyContent: "center",
           }}
         >
           <Autocomplete
-            sx={{ width: "20rem", paddingTop: "3rem" }}
+            sx={{ width: "21rem", paddingTop: "3rem" }}
             id="tags-standard"
             options={ExistOffer}
             autoHighlight
@@ -209,7 +232,11 @@ const Collab = () => {
             )}
           />
         </Box>
-        <Button variant="contained">Submit</Button>
+        <Box
+          sx={{ display: "flex", justifyContent: "center", paddingY: "2rem" }}
+        >
+          <Button variant="contained">Submit</Button>
+        </Box>
       </Dialog>
       <Dialog
         open={offer}
