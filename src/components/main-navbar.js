@@ -10,45 +10,30 @@ import {
   IconButton,
   Link,
   Toolbar,
-  Input,
-  Autocomplete,
   Dialog,
-  Stack,
-  TextField,
 } from "@mui/material";
-import { useMoralis } from "react-moralis";
+import { useRouter } from "next/router";
 import { Menu as MenuIcon } from "../icons/menu";
-import { Logo } from "./logo";
+
 import log from "./superteam.jpg";
 import { OfferForm } from "../components/Collab/OfferForm";
+import { divide } from "lodash";
 
 export const MainNavbar = (props) => {
   const { onOpenSidebar } = props;
-
-  const {
-    isAuthenticated,
-    authenticate,
-    isAuthenticating,
-    user,
-    logout,
-    isLoggingOut,
-  } = useMoralis();
-
-  const [isPhantom, setIsPhantom] = useState(false);
   const [open, setOpen] = useState(false);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [skills, setSkill] = useState("");
   const [url, setUrl] = useState("");
-  const [ratio, setRatio] = useState("");
-  const getProvider = () => {
-    if ("solana" in window) {
-      const provider = window.solana;
-      if (provider.isPhantom) {
-        setIsPhantom(true);
-      }
-    }
-  };
+  // const getProvider = () => {
+  //   if ("solana" in window) {
+  //     const provider = window.solana;
+  //     if (provider.isPhantom) {
+  //       setIsPhantom(true);
+  //     }
+  //   }
+  // };
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -56,10 +41,12 @@ export const MainNavbar = (props) => {
     setOpen(false);
   };
 
-  useEffect(() => {
-    getProvider();
-  }, []);
-
+  // useEffect(() => {
+  //   getProvider();
+  // }, []);
+  const router = useRouter();
+  const id = router.query.MyCollab;
+  console.log(id);
   return (
     <AppBar
       elevation={0}
@@ -75,7 +62,13 @@ export const MainNavbar = (props) => {
         <Toolbar disableGutters sx={{ minHeight: 64 }}>
           <NextLink href="/" passHref>
             <a>
-              <Image src={log} alt="logo" width="60" height="65" />
+              <Image
+                className="rounded"
+                src={log}
+                alt="logo"
+                width="60"
+                height="65"
+              />
             </a>
           </NextLink>
           <Box sx={{ flexGrow: 1 }} />
@@ -99,6 +92,8 @@ export const MainNavbar = (props) => {
               },
             }}
           >
+            {/* {router.query === "/Collab/Collab" && (
+              <div> */}
             <NextLink href="/Mycollab" passHref>
               <Link
                 color="textSecondary"
@@ -109,7 +104,9 @@ export const MainNavbar = (props) => {
                 My Collabs
               </Link>
             </NextLink>
-
+            {/* </div>
+            )}
+            : {<div>hello</div>} */}
             <Link
               color="textSecondary"
               sx={{ ml: 2, padding: "0 2rem", cursor: "pointer" }}
@@ -121,8 +118,19 @@ export const MainNavbar = (props) => {
             >
               Create an offer
             </Link>
-
-            <Button sx={{ ml: 2 }} target="_blank" variant="contained">
+            <Button
+              sx={{
+                ml: 2,
+                "&:hover": {
+                  color: "black",
+                  backgroundColor: "rgb(250,180,25)",
+                },
+                backgroundColor: "#FACC15",
+                color: "black",
+              }}
+              target="_blank"
+              variant="contained"
+            >
               BDYC
             </Button>
           </Box>

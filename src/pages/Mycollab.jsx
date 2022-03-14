@@ -13,6 +13,9 @@ import {
 
 import PropTypes, { arrayOf } from "prop-types";
 import { MainNavbar } from "../components/main-navbar";
+import { OffertoMe } from "../components/Collab/OffertoMe";
+import { CollabRequest } from "../components/Collab/CollabRequest";
+import { CollabGroup } from "../components/Collab/CollabGroup";
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -67,6 +70,8 @@ const Mycollab = () => {
           value={value}
           onChange={handleChange}
           aria-label="basic tabs example"
+          textColor="secondary"
+          indicatorColor="secondary"
         >
           <Tab label="Offered to me" {...a11yProps(0)} />
           <Tab label="Collab Requests" {...a11yProps(1)} />
@@ -75,102 +80,11 @@ const Mycollab = () => {
       </Box>
       <TabPanel value={value} index={0}>
         {/*********** Offered to me ***************** */}
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <Card
-            sx={{
-              width: "80%",
-            }}
-          >
-            <CardContent>
-              <Box
-                sx={{
-                  alignItems: "center",
-                  display: "flex",
-                }}
-              >
-                {/* <BriefcaseIcon color="primary" fontSize="small" /> */}
-                <Typography
-                  color="primary.main"
-                  sx={{ pl: 1 }}
-                  variant="subtitle2"
-                >
-                  Jobs
-                </Typography>
-              </Box>
-              <Typography variant="h6" sx={{ mt: 2 }}>
-                Find your dream job
-              </Typography>
-              <Typography color="textSecondary" variant="body2">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua.
-              </Typography>
-            </CardContent>
-            <Divider />
-            <CardActions sx={{ display: "flex", justifyContent: "end" }}>
-              <Button size="small" color="success" variant="outlined">
-                Accept
-              </Button>
-              <Button size="small" color="error" variant="outlined">
-                Reject
-              </Button>
-            </CardActions>
-          </Card>
-        </Box>
+        <OffertoMe />
       </TabPanel>
       <TabPanel value={value} index={1}>
         {/********* *  Collab Requests ***************** */}
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <Card
-            sx={{
-              width: "80%",
-            }}
-          >
-            <CardContent>
-              <Box
-                sx={{
-                  alignItems: "center",
-                  display: "flex",
-                }}
-              >
-                {/* <BriefcaseIcon color="primary" fontSize="small" /> */}
-                <Typography
-                  color="primary.main"
-                  sx={{ pl: 1 }}
-                  variant="subtitle2"
-                >
-                  Address
-                </Typography>
-              </Box>
-              <Typography variant="h6" sx={{ mt: 2 }}>
-                Title
-              </Typography>
-              <Typography color="textSecondary" variant="body2">
-                Description
-              </Typography>
-            </CardContent>
-            <Divider />
-            <CardActions sx={{ display: "flex", justifyContent: "end" }}>
-              <Button size="small" color="success" variant="outlined">
-                Accept
-              </Button>
-              <Button size="small" color="error" variant="outlined">
-                Reject
-              </Button>
-            </CardActions>
-          </Card>
-        </Box>
+        <CollabRequest />
       </TabPanel>
       <TabPanel value={value} index={2}>
         {/* {arr.map(()=>{
@@ -182,52 +96,7 @@ const Mycollab = () => {
           )
         })} */}
         {/**********  Groups ***************** */}
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <Card
-            sx={{
-              width: "80%",
-            }}
-          >
-            <CardContent>
-              <Box
-                sx={{
-                  alignItems: "center",
-                  display: "flex",
-                }}
-              >
-                {/* <BriefcaseIcon color="primary" fontSize="small" /> */}
-                <Typography
-                  color="primary.main"
-                  sx={{ pl: 1 }}
-                  variant="subtitle2"
-                >
-                  Address
-                </Typography>
-              </Box>
-              <Typography variant="h6" sx={{ mt: 2 }}>
-                Title
-              </Typography>
-              <Typography color="textSecondary" variant="body2">
-                Description
-              </Typography>
-            </CardContent>
-            <Divider />
-            <CardActions sx={{ display: "flex", justifyContent: "end" }}>
-              <Button size="small" color="success" variant="outlined">
-                Done
-              </Button>
-              <Button size="small" color="error" variant="outlined">
-                Close Group
-              </Button>
-            </CardActions>
-          </Card>
-        </Box>
+        <CollabGroup />
       </TabPanel>
     </>
   );

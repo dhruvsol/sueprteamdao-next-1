@@ -1,14 +1,8 @@
 import { useState } from "react";
+import { useRouter } from "next/router";
 import { Typography, Box, Button, Dialog, TextField } from "@mui/material";
 import { MainNavbar } from "../../components/main-navbar";
-const DetailCollab = ({
-  title,
-  description,
-  member1,
-  member2,
-  member3,
-  member4,
-}) => {
+const DetailCollab = () => {
   const [open, setOpen] = useState(false);
   const handleClickOpen = () => {
     setOpen(true);
@@ -16,6 +10,8 @@ const DetailCollab = ({
   const handleClose = () => {
     setOpen(false);
   };
+  const router = useRouter();
+  const CollabId = router.query.DetailCollab;
   return (
     <>
       <MainNavbar />
@@ -36,7 +32,7 @@ const DetailCollab = ({
           }}
         >
           <Typography sx={{ fontSize: "3rem" }}>Hello</Typography>
-          <Typography>Description</Typography>
+          <Typography>{CollabId}</Typography>
         </Box>
         <Box>
           <Typography sx={{ fontSize: "1.5rem", paddingTop: "2rem" }}>
@@ -59,6 +55,14 @@ const DetailCollab = ({
       >
         <Button
           variant="contained"
+          sx={{
+            "&:hover": {
+              color: "black",
+              backgroundColor: "rgb(250,180,25)",
+            },
+            backgroundColor: "#FACC15",
+            color: "black",
+          }}
           onClick={() => {
             handleClickOpen();
           }}
@@ -89,7 +93,19 @@ const DetailCollab = ({
         <Box
           sx={{ padding: "1rem", display: "flex", justifyContent: "center" }}
         >
-          <Button variant="contained">Submit</Button>
+          <Button
+            variant="contained"
+            sx={{
+              "&:hover": {
+                color: "black",
+                backgroundColor: "rgb(250,180,25)",
+              },
+              backgroundColor: "#FACC15",
+              color: "black",
+            }}
+          >
+            Submit
+          </Button>
         </Box>
       </Dialog>
     </>

@@ -71,8 +71,9 @@ export const MainLayout = ({ children }) => {
               router.push("/Collab/Collab");
             }}
             size="medium"
-            variant="outlined"
+            variant="contained"
             sx={{ ml: 2 }}
+            color="secondary"
           >
             Get started
           </Button>
@@ -92,7 +93,8 @@ export const MainLayout = ({ children }) => {
             size="medium"
             sx={{ ml: 2 }}
             target="_blank"
-            variant="contained"
+            variant="outlined"
+            color="secondary"
             disabled={isLoggingOut}
           >
             Logout

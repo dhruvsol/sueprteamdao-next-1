@@ -76,12 +76,20 @@ export const OfferForm = () => {
         }}
       >
         <Button
-          variant="outlined"
+          variant="contained"
+          sx={{
+            "&:hover": {
+              color: "black",
+              backgroundColor: "rgb(250,180,25)",
+            },
+            backgroundColor: "#FACC15",
+            color: "black",
+          }}
           onClick={() => {
             PostData(title, description, skills, url, ratio);
           }}
         >
-          Summit
+          Submit
         </Button>
       </Box>
     </>

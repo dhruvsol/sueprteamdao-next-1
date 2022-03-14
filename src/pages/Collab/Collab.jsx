@@ -12,7 +12,7 @@ import {
   Avatar,
 } from "@mui/material";
 import PropTypes from "prop-types";
-
+import Image from "next/image";
 import CardCollab from "../../components/Collab/Card";
 import axios from "axios";
 import { MainNavbar } from "../../components/main-navbar";
@@ -170,7 +170,15 @@ const Collab = () => {
             onClick={() => {
               handleClickOpen();
             }}
-            variant="outlined"
+            variant="contanined"
+            sx={{
+              "&:hover": {
+                color: "black",
+                backgroundColor: "rgb(250,180,25)",
+              },
+              backgroundColor: "#FACC15",
+              color: "black",
+            }}
           >
             Invite
           </Button>
@@ -192,10 +200,32 @@ const Collab = () => {
             alignItems: "center",
           }}
         >
-          <Button variant="contained" onClick={() => handleExistOpen()}>
+          <Button
+            sx={{
+              "&:hover": {
+                color: "black",
+                backgroundColor: "rgb(250,180,25)",
+              },
+              backgroundColor: "#FACC15",
+              color: "black",
+            }}
+            variant="contained"
+            onClick={() => handleExistOpen()}
+          >
             Select your existing offer
           </Button>
-          <Button variant="contained" onClick={() => handleOfferOpen()}>
+          <Button
+            sx={{
+              "&:hover": {
+                color: "black",
+                backgroundColor: "rgb(250,180,25)",
+              },
+              backgroundColor: "#FACC15",
+              color: "black",
+            }}
+            variant="contained"
+            onClick={() => handleOfferOpen()}
+          >
             Create New Offer
           </Button>
         </Box>
@@ -225,8 +255,8 @@ const Collab = () => {
               <TextField
                 {...params}
                 variant="standard"
-                label="Exisiting Offer"
-                placeholder="Exisiting Offer"
+                label="Existing Offer"
+                placeholder="Existing Offer"
                 // onChange={(e) => setSkills(e.target.value)}
               />
             )}
@@ -235,7 +265,19 @@ const Collab = () => {
         <Box
           sx={{ display: "flex", justifyContent: "center", paddingY: "2rem" }}
         >
-          <Button variant="contained">Submit</Button>
+          <Button
+            sx={{
+              "&:hover": {
+                color: "black",
+                backgroundColor: "rgb(250,180,25)",
+              },
+              backgroundColor: "#FACC15",
+              color: "black",
+            }}
+            variant="contained"
+          >
+            Submit
+          </Button>
         </Box>
       </Dialog>
       <Dialog
@@ -254,20 +296,26 @@ const Collab = () => {
               value={value}
               onChange={handleChange}
               aria-label="basic tabs example"
+              textColor="secondary"
+              indicatorColor="secondary"
             >
               <Tab label="Open offers" {...a11yProps(0)} />
               <Tab label="Joined Collabs" {...a11yProps(1)} />
             </Tabs>
           </Box>
           <TabPanel value={value} index={0}>
+            {/* map 1 */}
             <CardCollab
+              id="11"
               Title="Title"
               Description="Description"
               Address="Address"
             />
           </TabPanel>
           <TabPanel value={value} index={1}>
+            {/* map 2 */}
             <CardCollab
+              id="10"
               Title="Title"
               Description="Description"
               Address="Address"
@@ -275,17 +323,15 @@ const Collab = () => {
           </TabPanel>
         </Box>
       </Box>
-      {/* {arr.map(({ name, description }) => {
+      {/* {arr.map(({ Title, Description,Address }) => {
         return (
           <>
             <div key={}>
-              <SingleCollab
-                name="bounty 1"
-                description="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dolorem,
-        fugiat eos saepe in quas nihil nesciunt, minus officia corporis
-        consequatur esse amet ad, odit quia eius aliquid laudantium consectetur
-        corrupti?"
-              />
+              <CardCollab
+              Title="Title"
+              Description="Description"
+              Address="Address"
+            />
             </div>
           </>
         );

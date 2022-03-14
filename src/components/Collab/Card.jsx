@@ -1,17 +1,7 @@
 import React from "react";
 import { useRouter } from "next/router";
-import {
-  Box,
-  Tabs,
-  Tab,
-  Typography,
-  Divider,
-  CardContent,
-  Card,
-  CardActions,
-  Button,
-} from "@mui/material";
-const CardCollab = ({ Title, Address, Description }) => {
+import { Box, Typography, CardContent, Card } from "@mui/material";
+const CardCollab = ({ Title, Address, Description, id }) => {
   const router = useRouter();
   return (
     <>
@@ -19,7 +9,7 @@ const CardCollab = ({ Title, Address, Description }) => {
         sx={{
           width: "80%",
         }}
-        onClick={() => router.push("/Collab/DetailCollab")}
+        onClick={() => router.push(`/Collab/${id}`)}
       >
         <CardContent>
           <Box
@@ -28,7 +18,7 @@ const CardCollab = ({ Title, Address, Description }) => {
               display: "flex",
             }}
           >
-            <Typography color="primary.main" sx={{ pl: 1 }} variant="subtitle2">
+            <Typography color="secondary" sx={{ pl: 1 }} variant="subtitle2">
               {Address}
             </Typography>
           </Box>
