@@ -17,7 +17,6 @@ import { Menu as MenuIcon } from "../icons/menu";
 
 import log from "./superteam.jpg";
 import { OfferForm } from "../components/Collab/OfferForm";
-import { divide } from "lodash";
 
 export const MainNavbar = (props) => {
   const { onOpenSidebar } = props;
@@ -26,14 +25,8 @@ export const MainNavbar = (props) => {
   const [description, setDescription] = useState("");
   const [skills, setSkill] = useState("");
   const [url, setUrl] = useState("");
-  // const getProvider = () => {
-  //   if ("solana" in window) {
-  //     const provider = window.solana;
-  //     if (provider.isPhantom) {
-  //       setIsPhantom(true);
-  //     }
-  //   }
-  // };
+
+  const userId = "62302ee3b9d20031f8cefa8d";
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -41,12 +34,9 @@ export const MainNavbar = (props) => {
     setOpen(false);
   };
 
-  // useEffect(() => {
-  //   getProvider();
-  // }, []);
   const router = useRouter();
   const id = router.query.MyCollab;
-  console.log(id);
+
   return (
     <AppBar
       elevation={0}
@@ -92,21 +82,27 @@ export const MainNavbar = (props) => {
               },
             }}
           >
-            {/* {router.query === "/Collab/Collab" && (
-              <div> */}
-            <NextLink href="/Mycollab" passHref>
+            <NextLink href="/AllCollab" passHref>
               <Link
                 color="textSecondary"
                 underline="none"
                 variant="subtitle2"
                 sx={{ padding: "0 1rem" }}
               >
-                My Collabs
+                All Collab
               </Link>
             </NextLink>
-            {/* </div>
-            )}
-            : {<div>hello</div>} */}
+
+            <Link
+              onClick={() => router.push(`/Collab/Mycollab/${userId}`)}
+              color="textSecondary"
+              underline="none"
+              variant="subtitle2"
+              sx={{ padding: "0 1rem" }}
+            >
+              My Collabs
+            </Link>
+
             <Link
               color="textSecondary"
               sx={{ ml: 2, padding: "0 2rem", cursor: "pointer" }}
