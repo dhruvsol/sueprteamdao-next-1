@@ -1,8 +1,17 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import { Typography, Box, Button, Dialog, TextField } from "@mui/material";
+import {
+  Typography,
+  Box,
+  Button,
+  Dialog,
+  TextField,
+  Divider,
+  Paper,
+} from "@mui/material";
 import { MainNavbar } from "../../../components/main-navbar";
 import { GetName } from "../../../components/Collab/GetName";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 const DetailCollab = ({ data }) => {
   const [open, setOpen] = useState(false);
   const router = useRouter();
@@ -14,6 +23,7 @@ const DetailCollab = ({ data }) => {
     setOpen(false);
   };
 
+  const fetchName = () => {};
   return (
     <>
       <MainNavbar />
@@ -21,121 +31,162 @@ const DetailCollab = ({ data }) => {
         sx={{
           display: "flex",
           justifyContent: "center",
-          flexDirection: "column",
           alignItems: "center",
-          paddingTop: "5rem",
+          height: "100vh",
         }}
       >
-        <Box
+        <Paper
+          elevation={8}
           sx={{
-            display: "flex",
-            justifyContent: "center",
-            flexDirection: "column",
+            width: "80%",
+            height: "40rem",
+            // background: "linear-gradient(to right, #cac531, #f3f9a7)",
           }}
         >
-          <Typography sx={{ fontSize: "3rem" }}>{data.title}</Typography>
-          <Typography>{data.description}</Typography>
-        </Box>
-        <Box>
-          <Typography sx={{ fontSize: "1.5rem", paddingTop: "2rem" }}>
-            {data.status}
-          </Typography>
-
-          <Typography
-            sx={{ fontSize: "1.5rem", paddingTop: "2rem" }}
-            onClick={() => router.push(`/Collab/${data.createdBy}`)}
-          >
-            CreatedBY:
-            {data.createdBy}
-          </Typography>
-
-          <Box sx={{ paddingTop: "3rem" }}>
-            <Typography sx={{ fontSize: "2rem", paddingBottom: "1rem" }}>
-              Members
-            </Typography>
-            {data.members.map((member) => {
-              return (
-                <>
-                  <Box sx={{ display: "flex" }}>
-                    <Typography
-                      onClick={() => router.push(`/Collab/${member}`)}
-                      sx={{ paddingY: "1rem" }}
-                    >
-                      {member}
-                    </Typography>
-                  </Box>
-                </>
-              );
-            })}
-          </Box>
-        </Box>
-      </Box>
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          paddingTop: "3rem",
-        }}
-      >
-        <Button
-          variant="contained"
-          sx={{
-            "&:hover": {
-              color: "black",
-              backgroundColor: "rgb(250,180,25)",
-            },
-            backgroundColor: "#FACC15",
-            color: "black",
-          }}
-          onClick={() => {
-            handleClickOpen();
-          }}
-        >
-          Apply
-        </Button>
-      </Box>
-      <Dialog
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-        sx={{ width: "100%" }}
-      >
-        <Box
-          sx={{
-            width: "30rem",
-            display: "flex",
-            justifyContent: "space-evenly",
-            alignItems: "center",
-            flexDirection: "column",
-            height: "12rem",
-          }}
-        >
-          <TextField placeholder="How will you contribute?" />
-          <TextField placeholder="How much hrs can u put?" />
-        </Box>
-        <Box
-          sx={{
-            padding: "1rem",
-            display: "flex",
-            justifyContent: "center",
-          }}
-        >
-          <Button
-            variant="contained"
+          <Box
             sx={{
-              "&:hover": {
-                color: "black",
-                backgroundColor: "rgb(250,180,25)",
-              },
-              backgroundColor: "#FACC15",
-              color: "black",
+              display: "flex",
+              justifyContent: "center",
+              flexDirection: "column",
+              alignItems: "center",
+              paddingTop: "5rem",
             }}
           >
-            Submit
-          </Button>
-        </Box>
-      </Dialog>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
+            >
+              <Typography sx={{ fontSize: "3rem" }}>{data.title}</Typography>
+              <Typography>{data.description}</Typography>
+              <Divider />
+            </Box>
+            <Box>
+              <Typography
+                sx={{
+                  fontSize: "2rem",
+                  paddingTop: "2rem",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+                onClick={() => router.push(`/Collab/${data.createdBy}`)}
+              >
+                <AccountCircleIcon fontSize="large" />
+                <Box sx={{ paddingX: "1rem" }}>
+                  <GetName userId={data.createdBy} />
+                </Box>
+                {/* {data.createdBy} */}
+              </Typography>
+
+              <Box sx={{ paddingTop: "1rem" }}>
+                <Typography
+                  sx={{
+                    fontSize: "2rem",
+                    display: "flex",
+                    justifyContent: "center",
+                    paddingTop: "1rem",
+                  }}
+                >
+                  Members
+                </Typography>
+                {data.members.map((member) => {
+                  return (
+                    <>
+                      <Box sx={{ display: "flex", justifyContent: "center" }}>
+                        <Typography
+                          onClick={() => router.push(`/Collab/${member}`)}
+                          sx={{
+                            paddingY: "0.5rem",
+                            paddingX: "1rem",
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                          }}
+                        >
+                          <AccountCircleIcon />
+                          <Box sx={{ paddingX: "0.5rem", fontSize: "1.5rem" }}>
+                            <GetName userId={member} />
+                          </Box>
+                        </Typography>
+                      </Box>
+                    </>
+                  );
+                })}
+              </Box>
+            </Box>
+          </Box>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              paddingTop: "3rem",
+            }}
+          >
+            <Button
+              variant="contained"
+              sx={{
+                "&:hover": {
+                  color: "black",
+                  backgroundColor: "rgb(250,180,25)",
+                },
+                backgroundColor: "#FACC15",
+                color: "black",
+              }}
+              onClick={() => {
+                handleClickOpen();
+              }}
+            >
+              Apply
+            </Button>
+          </Box>
+          <Dialog
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+            sx={{ width: "100%" }}
+          >
+            <Box
+              sx={{
+                width: "30rem",
+                display: "flex",
+                justifyContent: "space-evenly",
+                alignItems: "center",
+                flexDirection: "column",
+                height: "12rem",
+              }}
+            >
+              <TextField placeholder="How will you contribute?" />
+              <TextField placeholder="How much hrs can u put?" />
+            </Box>
+            <Box
+              sx={{
+                padding: "1rem",
+                display: "flex",
+                justifyContent: "center",
+              }}
+            >
+              <Button
+                variant="contained"
+                sx={{
+                  "&:hover": {
+                    color: "black",
+                    backgroundColor: "rgb(250,180,25)",
+                  },
+                  backgroundColor: "#FACC15",
+                  color: "black",
+                }}
+              >
+                Submit
+              </Button>
+            </Box>
+          </Dialog>
+        </Paper>
+      </Box>
     </>
   );
 };
@@ -148,8 +199,6 @@ export async function getServerSideProps(context) {
     `https://intense-mesa-39554.herokuapp.com/v1/collabs/${DetailCollab}`
   );
   const data = await res.json();
-  console.log(data);
-  // Pass data to the page via props
   return { props: { data } };
 }
 export default DetailCollab;

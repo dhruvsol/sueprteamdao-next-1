@@ -8,8 +8,9 @@ import {
   TextField,
   Tab,
   Tabs,
-  Avatar,
+  Paper,
 } from "@mui/material";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import PropTypes from "prop-types";
 import CardCollab from "../../components/Collab/Card";
 import { MainNavbar } from "../../components/main-navbar";
@@ -66,6 +67,7 @@ const Collab = ({ data, openOffer, JoinOffers }) => {
   };
   const handleClose = () => {
     setOpen(false);
+    setOffer(false);
   };
   //////// for exist ////////////
   const handleExistOpen = () => {
@@ -118,14 +120,7 @@ const Collab = ({ data, openOffer, JoinOffers }) => {
             height: "8rem",
           }}
         >
-          <Avatar
-            sx={{
-              width: "5rem",
-              height: "5rem",
-            }}
-            alt="Tanmay"
-            src="./tanmay.jpg"
-          />
+          <AccountCircleIcon fontSize="large" />
           <Box sx={{ paddingLeft: "2rem" }}>
             <Typography
               sx={{
@@ -145,7 +140,7 @@ const Collab = ({ data, openOffer, JoinOffers }) => {
         >
           <Button
             onClick={() => {
-              handleClickOpen();
+              handleOfferOpen();
             }}
             variant="contanined"
             sx={{
@@ -169,8 +164,21 @@ const Collab = ({ data, openOffer, JoinOffers }) => {
           paddingBottom: "3rem",
         }}
       >
-        <Typography>{data.skills}</Typography>
-        <Typography sx={{ paddingX: "2rem" }}>{data.superXP}</Typography>
+        <Paper
+          sx={{
+            backgroundColor: "grey",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "2rem",
+            width: "20rem",
+          }}
+        >
+          <Typography sx={{ fontSize: "1rem" }}>{data.skills[0]}</Typography>
+          <Typography sx={{ paddingX: "1.5rem", fontSize: "1rem" }}>
+            {data.superXP} Super-XPs
+          </Typography>
+        </Paper>
       </Box>
       <Dialog
         open={open}
@@ -273,7 +281,7 @@ const Collab = ({ data, openOffer, JoinOffers }) => {
       </Dialog>
       <Dialog
         open={offer}
-        onClose={handleOfferClose}
+        onClose={handleClose}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >

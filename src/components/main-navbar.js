@@ -98,7 +98,7 @@ export const MainNavbar = (props) => {
               color="textSecondary"
               underline="none"
               variant="subtitle2"
-              sx={{ padding: "0 1rem", cursor: "pointers" }}
+              sx={{ padding: "0 1rem", cursor: "pointer" }}
             >
               My Collabs
             </Link>
