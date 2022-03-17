@@ -87,7 +87,7 @@ export const MainLayout = ({ children }) => {
         {isAuthenticated && (
           <Button
             onClick={() => {
-              router.push("/Collab/62304319a51798256081cc14");
+              router.push("/AllCollab");
             }}
             size="medium"
             variant="contained"

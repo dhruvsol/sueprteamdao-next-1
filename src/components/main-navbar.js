@@ -98,7 +98,7 @@ export const MainNavbar = (props) => {
               color="textSecondary"
               underline="none"
               variant="subtitle2"
-              sx={{ padding: "0 1rem" }}
+              sx={{ padding: "0 1rem", cursor: "pointers" }}
             >
               My Collabs
             </Link>
@@ -126,6 +126,7 @@ export const MainNavbar = (props) => {
               }}
               target="_blank"
               variant="contained"
+              onClick={() => router.push("https://bdyc-six.vercel.app/")}
             >
               BDYC
             </Button>
