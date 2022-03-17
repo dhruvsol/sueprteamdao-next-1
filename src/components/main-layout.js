@@ -61,7 +61,7 @@ export const MainLayout = ({ children }) => {
     if (user != null) {
       storeUserId();
     }
-  }, []);
+  });
   return (
     <MainLayoutRoot>
       {/* <IconButton color="inherit" onClick={onOpenSidebar()}></IconButton> */}
