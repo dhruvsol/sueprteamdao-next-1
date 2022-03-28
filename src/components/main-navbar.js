@@ -26,7 +26,7 @@ export const MainNavbar = (props) => {
   const [skills, setSkill] = useState("");
   const [url, setUrl] = useState("");
 
-  const userId = "62302ee3b9d20031f8cefa8d";
+  const userId = localStorage.getItem("currentUser");
   const handleClickOpen = () => {
     setOpen(true);
   };
