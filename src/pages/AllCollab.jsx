@@ -11,16 +11,7 @@ import {
 import { MainNavbar } from "../components/main-navbar";
 import { useRouter } from "next/router";
 
-const AllCollab = () => {
-  const [allcollab, setCollab] = useState([]);
-  const router = useRouter();
-  useEffect(() => {
-    fetch("https://intense-mesa-39554.herokuapp.com/v1/collabs")
-      .then((response) => response.json())
-      .then(({ results }) => setCollab(results));
-    console.log(allcollab);
-  }, []);
-
+const AllCollab = ({ allcollab }) => {
   return (
     <>
       <MainNavbar />
@@ -112,5 +103,12 @@ const AllCollab = () => {
     </>
   );
 };
+export async function getServerSideProps(context) {
+  const res = await fetch(
+    "https://intense-mesa-39554.herokuapp.com/v1/collabs"
+  );
+  const data = await res.json();
+  return { props: { allcollab } };
+}
 
 export default AllCollab;
