@@ -108,6 +108,8 @@ export async function getServerSideProps(context) {
     "https://intense-mesa-39554.herokuapp.com/v1/collabs"
   );
   const data = await res.json();
+  const allcollab = data.results;
+  // console.log(allcollab);
   return { props: { allcollab } };
 }
 
