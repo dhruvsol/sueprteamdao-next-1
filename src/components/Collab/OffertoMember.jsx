@@ -33,7 +33,7 @@ export const OffertoMember = ({ id }) => {
   const { Collab } = router.query;
 
   const PostData = () => {
-    fetch("http://localhost:5000/v1/collaborators/", {
+    fetch("https://intense-mesa-39554.herokuapp.com/v1/collaborators/", {
       method: "POST",
       body: JSON.stringify({
         collab: collabs,

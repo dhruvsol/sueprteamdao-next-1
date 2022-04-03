@@ -27,7 +27,7 @@ export const OfferForm = () => {
   const [description, setDescription] = useState(" ");
   const [skills, setSkills] = useState(null);
   const PostData = () => {
-    fetch("http://localhost:5000/v1/collabs/", {
+    fetch("https://intense-mesa-39554.herokuapp.com/v1/collabs/", {
       method: "POST",
       body: JSON.stringify({
         // createdBy:

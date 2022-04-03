@@ -41,7 +41,7 @@ export const MainLayout = ({ children }) => {
     // authenticate({ type: 'sol' })
     if (isAuthenticated) {
       const res = await fetch(
-        `http://localhost:5000/v1/users?walletAddress=${user.attributes.solAddress}`
+        `https://intense-mesa-39554.herokuapp.com/v1/users?walletAddress=${user.attributes.solAddress}`
       );
       const data = await res.json();
       const result = data.results[0].id;

@@ -112,7 +112,9 @@ const AllCollab = ({ allcollab }) => {
   );
 };
 export async function getServerSideProps(context) {
-  const res = await fetch("http://localhost:5000/v1/collabs");
+  const res = await fetch(
+    "https://intense-mesa-39554.herokuapp.com/v1/collabs"
+  );
   const data = await res.json();
   const allcollab = data.results;
   // console.log(allcollab);

@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 export const OffertoMe = ({ collab, commitHour, address, id }) => {
   const accepted = () => {
-    fetch(`http://localhost:5000/v1/collaborators/${id}`, {
+    fetch(`https://intense-mesa-39554.herokuapp.com/v1/collaborators/${id}`, {
       method: "PATCH",
       body: JSON.stringify({
         status: "accepted",
@@ -21,7 +21,7 @@ export const OffertoMe = ({ collab, commitHour, address, id }) => {
     });
   };
   const rejected = () => {
-    fetch(`http://localhost:5000/v1/collaborators/${id}`, {
+    fetch(`https://intense-mesa-39554.herokuapp.com/v1/collaborators/${id}`, {
       method: "PATCH",
       body: JSON.stringify({
         status: "rejected",

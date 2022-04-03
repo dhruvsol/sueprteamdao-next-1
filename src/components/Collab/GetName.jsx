@@ -5,7 +5,7 @@ export const GetName = ({ userId }) => {
   // const [names, setName] = useState(null);
   // const fetchdata = async () => {
   //   const name = await fetch(
-  //     `http://localhost:5000/v1/users/${userId}`
+  //     `https://intense-mesa-39554.herokuapp.com/v1/users/${userId}`
   //   );
   //   // console.log(name);
   //   const data = JSON.stringify(name);
@@ -17,7 +17,7 @@ export const GetName = ({ userId }) => {
   // }, []);
   const [names, setNames] = useState("");
   const test = async () => {
-    fetch(`http://localhost:5000/v1/users/${userId}`)
+    fetch(`https://intense-mesa-39554.herokuapp.com/v1/users/${userId}`)
       .then((res) => res.json())
       .then((data) => setNames(data.name));
   };

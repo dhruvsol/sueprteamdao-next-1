@@ -12,20 +12,20 @@ export const CollabGroup = ({ collab, commitHour, address, id }) => {
   const [b1, setB] = useState(null);
   const [user, setUser] = useState(null);
   const fetchData = async () => {
-    fetch(`http://localhost:5000/v1/collabs/${collab}`)
+    fetch(`https://intense-mesa-39554.herokuapp.com/v1/collabs/${collab}`)
       .then((res) => res.json())
       .then((data1) => setB(data1.createdBy));
   };
   const fetchUsers = async () => {
-    const data = await fetch(`http://localhost:5000/v1/users/${b1}`).then(
-      (res) => res.json()
-    );
+    const data = await fetch(
+      `https://intense-mesa-39554.herokuapp.com/v1/users/${b1}`
+    ).then((res) => res.json());
     console.log(data);
   };
   useEffect(() => {
     fetchData();
     // fetchUsers();
-    fetch(`http://localhost:5000/v1/users/${b1}`)
+    fetch(`https://intense-mesa-39554.herokuapp.com/v1/users/${b1}`)
       .then((res) => res.json())
       .then((dat) => console.log(dat));
   }, []);
@@ -100,7 +100,7 @@ export const CollabGroup = ({ collab, commitHour, address, id }) => {
 };
 export async function getServerSideProps(context) {
   const res = fetch(
-    `http://localhost:5000/v1/collabs/62304661a51798256081cc33`
+    `https://intense-mesa-39554.herokuapp.com/v1/collabs/62304661a51798256081cc33`
   );
   const collabId = await res.json();
   return { props: { collabId } };
