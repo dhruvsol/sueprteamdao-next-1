@@ -11,22 +11,19 @@ import {
 
 export const CollabRequest = ({ collab, commitHour, address, id }) => {
   const accepted = () => {
-    const result = fetch(
-      `https://intense-mesa-39554.herokuapp.com/v1/collaborators/${id}`,
-      {
-        method: "PATCH",
-        body: JSON.stringify({
-          status: "accepted",
-        }),
-        headers: {
-          "Content-type": "application/json; charset=UTF-8",
-        },
-      }
-    );
+    const result = fetch(`http://localhost:5000/v1/collaborators/${id}`, {
+      method: "PATCH",
+      body: JSON.stringify({
+        status: "accepted",
+      }),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    });
     console.log(result);
   };
   const rejected = () => {
-    fetch(`https://intense-mesa-39554.herokuapp.com/v1/collaborators/${id}`, {
+    fetch(`http://localhost:5000/v1/collaborators/${id}`, {
       method: "PATCH",
       body: JSON.stringify({
         status: "rejected",

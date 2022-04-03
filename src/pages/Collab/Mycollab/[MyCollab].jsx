@@ -129,14 +129,14 @@ export async function getServerSideProps(context) {
   // Fetch data from external API
   const { MyCollab } = context.query;
   const res = await fetch(
-    `https://intense-mesa-39554.herokuapp.com/v1/collaborators?status=requested&user=${MyCollab}`
+    `http://localhost:5000/v1/collaborators?status=requested&user=${MyCollab}`
   );
   const res11 = await fetch(
-    `https://intense-mesa-39554.herokuapp.com/v1/collaborators?status=offered&user=${MyCollab}`
+    `http://localhost:5000/v1/collaborators?status=offered&user=${MyCollab}`
   );
 
   const res2 = await fetch(
-    `https://intense-mesa-39554.herokuapp.com/v1/collaborators?status=accepted&user=${MyCollab}`
+    `http://localhost:5000/v1/collaborators?status=accepted&user=${MyCollab}`
   );
   const data = await res.json();
   const offertome = await res11.json();

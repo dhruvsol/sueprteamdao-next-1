@@ -349,15 +349,13 @@ export async function getServerSideProps(context) {
   const { Collab } = context.query;
   const que = context.query.Collab;
   // Fetch data from external API
-  const res = await fetch(
-    `https://intense-mesa-39554.herokuapp.com/v1/users/${Collab}`
-  );
+  const res = await fetch(`http://localhost:5000/v1/users/${Collab}`);
   const data = await res.json();
   const resoffer = await fetch(
-    `https://intense-mesa-39554.herokuapp.com/v1/collabs/?createdBy=${Collab}`
+    `http://localhost:5000/v1/collabs/?createdBy=${Collab}`
   );
   const resJoin = await fetch(
-    `https://intense-mesa-39554.herokuapp.com/v1/collaborators/?status=accepted&user=${Collab}`
+    `http://localhost:5000/v1/collaborators/?status=accepted&user=${Collab}`
   );
   const openOffer = await resoffer.json();
   const JoinOffers = await resJoin.json();

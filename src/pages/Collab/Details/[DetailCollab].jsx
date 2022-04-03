@@ -195,9 +195,7 @@ export async function getServerSideProps(context) {
   const { DetailCollab } = context.query;
 
   // Fetch data from external API
-  const res = await fetch(
-    `https://intense-mesa-39554.herokuapp.com/v1/collabs/${DetailCollab}`
-  );
+  const res = await fetch(`http://localhost:5000/v1/collabs/${DetailCollab}`);
   const data = await res.json();
   return { props: { data } };
 }

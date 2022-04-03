@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Box,
   Card,
@@ -8,37 +7,25 @@ import {
   CardActions,
   Button,
 } from "@mui/material";
-export const OffertoMe = ({ collab, commitHour, address, id }) => {
-  const accepted = () => {
-    fetch(`http://localhost:5000/v1/collaborators/${id}`, {
-      method: "PATCH",
-      body: JSON.stringify({
-        status: "accepted",
-      }),
-      headers: {
-        "Content-type": "application/json; charset=UTF-8",
-      },
-    });
-  };
-  const rejected = () => {
-    fetch(`http://localhost:5000/v1/collaborators/${id}`, {
-      method: "PATCH",
-      body: JSON.stringify({
-        status: "rejected",
-      }),
-      headers: {
-        "Content-type": "application/json; charset=UTF-8",
-      },
-    });
-  };
+import { useRouter } from "next/router";
+export const AllCollabCard = ({
+  createdBy,
+  id,
+  skills,
+  status,
+  title,
+  description,
+}) => {
+  const router = useRouter();
   return (
     <>
-      {}
       <Box
+        key={id}
         sx={{
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
+          paddingY: "1.2rem",
         }}
       >
         <Card
@@ -64,33 +51,36 @@ export const OffertoMe = ({ collab, commitHour, address, id }) => {
                 }}
                 variant="subtitle2"
               >
-                {address}
+                {createdBy}
               </Typography>
             </Box>
             <Typography variant="h6" sx={{ mt: 2 }}>
-              Collab Id: {collab}
+              {title}
             </Typography>
             <Typography color="textSecondary" variant="body2">
-              Commited Hours : {commitHour}
+              {description}
+            </Typography>
+            <Typography color="textSecondary" variant="body2">
+              {status}
+            </Typography>
+            <Typography color="textSecondary" variant="body2">
+              {skills}
             </Typography>
           </CardContent>
           <Divider />
-          <CardActions sx={{ display: "flex", justifyContent: "end" }}>
+          <CardActions
+            sx={{
+              display: "flex",
+              justifyContent: "end",
+            }}
+          >
             <Button
               size="small"
-              color="success"
-              variant="outlined"
-              onClick={() => accepted()}
+              color="secondary"
+              variant="contained"
+              onClick={() => router.push(`/Collab/Details/${id}`)}
             >
-              Accept
-            </Button>
-            <Button
-              size="small"
-              color="error"
-              variant="outlined"
-              onClick={() => rejected()}
-            >
-              Reject
+              Details
             </Button>
           </CardActions>
         </Card>

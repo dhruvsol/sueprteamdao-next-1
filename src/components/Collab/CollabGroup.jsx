@@ -1,4 +1,4 @@
-import React from "react";
+import { useState, useEffect } from "react";
 import {
   Box,
   Card,
@@ -8,73 +8,29 @@ import {
   CardActions,
   Button,
 } from "@mui/material";
-export const CollabGroup = ({ collab, commitHour, address, id, collabId }) => {
-  const Done = () => {
-    fetch(`https://intense-mesa-39554.herokuapp.com/v1/collabs/${collab}`, {
-      method: "PATCH",
-      body: JSON.stringify({
-        status: "sucess",
-      }),
-      headers: {
-        "Content-type": "application/json; charset=UTF-8",
-      },
-    });
-    fetch(`https://intense-mesa-39554.herokuapp.com/v1/collaborators/${id}`, {
-      method: "PATCH",
-      body: JSON.stringify({
-        status: "rejected",
-      }),
-      headers: {
-        "Content-type": "application/json; charset=UTF-8",
-      },
-    });
+export const CollabGroup = ({ collab, commitHour, address, id }) => {
+  const [b1, setB] = useState(null);
+  const [user, setUser] = useState(null);
+  const fetchData = async () => {
+    fetch(`http://localhost:5000/v1/collabs/${collab}`)
+      .then((res) => res.json())
+      .then((data1) => setB(data1.createdBy));
   };
-  const Close = () => {
-    fetch(`https://intense-mesa-39554.herokuapp.com/v1/collabs/${collab}`, {
-      method: "PATCH",
-      body: JSON.stringify({
-        status: "failed",
-      }),
-      headers: {
-        "Content-type": "application/json; charset=UTF-8",
-      },
-    });
-    fetch(`https://intense-mesa-39554.herokuapp.com/v1/collaborators/${id}`, {
-      method: "PATCH",
-      body: JSON.stringify({
-        status: "rejected",
-      }),
-      headers: {
-        "Content-type": "application/json; charset=UTF-8",
-      },
-    });
-  };
-  //  Function for XP Allocation
-  const fnMain = async () => {
-    const res = await fetch(
-      `https://intense-mesa-39554.herokuapp.com/v1/collabs/62304661a51798256081cc33`
+  const fetchUsers = async () => {
+    const data = await fetch(`http://localhost:5000/v1/users/${b1}`).then(
+      (res) => res.json()
     );
-    const data = JSON.stringify(res);
-    console.log(data, res);
-    console.log(createdBy, members);
-    const { superXP, id } = fetch(
-      `https://intense-mesa-39554.herokuapp.com/v1/users/${createdBy}`
-    );
-    const newXp = superXP + 10;
-    console.log(superXP);
-    fetch(`https://intense-mesa-39554.herokuapp.com/v1/users/${id}`, {
-      method: "PATCH",
-      body: JSON.stringify({
-        superXP: newXp,
-      }),
-      headers: {
-        "Content-type": "application/json; charset=UTF-8",
-      },
-    });
+    console.log(data);
   };
-
-  // console.log(JSON.stringify());
-  // console.log(createdBy);
+  useEffect(() => {
+    fetchData();
+    // fetchUsers();
+    fetch(`http://localhost:5000/v1/users/${b1}`)
+      .then((res) => res.json())
+      .then((dat) => console.log(dat));
+  }, []);
+  console.log(b1);
+  console.log(user);
   return (
     <>
       <Box
@@ -124,7 +80,7 @@ export const CollabGroup = ({ collab, commitHour, address, id, collabId }) => {
               size="small"
               color="success"
               variant="outlined"
-              onClick={() => Done()}
+              onClick={() => fnMain()}
             >
               Done
             </Button>
@@ -144,7 +100,7 @@ export const CollabGroup = ({ collab, commitHour, address, id, collabId }) => {
 };
 export async function getServerSideProps(context) {
   const res = fetch(
-    `https://intense-mesa-39554.herokuapp.com/v1/collabs/62304661a51798256081cc33`
+    `http://localhost:5000/v1/collabs/62304661a51798256081cc33`
   );
   const collabId = await res.json();
   return { props: { collabId } };

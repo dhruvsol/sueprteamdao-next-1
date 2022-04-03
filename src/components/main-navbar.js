@@ -21,21 +21,25 @@ import { OfferForm } from "../components/Collab/OfferForm";
 export const MainNavbar = (props) => {
   const { onOpenSidebar } = props;
   const [open, setOpen] = useState(false);
-  const [title, setTitle] = useState("");
+  const [title, setTitle] = useState(null);
   const [description, setDescription] = useState("");
   const [skills, setSkill] = useState("");
   const [url, setUrl] = useState("");
 
-  const userId = localStorage.getItem("currentUser");
+  // const userId = localStorage.getItem("currentUser");
+
   const handleClickOpen = () => {
     setOpen(true);
   };
   const handleClose = () => {
     setOpen(false);
   };
-
   const router = useRouter();
   const id = router.query.MyCollab;
+  useEffect(() => {
+    const userId = localStorage.getItem("currentUser");
+    setTitle(userId);
+  }, []);
 
   return (
     <AppBar
@@ -94,7 +98,7 @@ export const MainNavbar = (props) => {
             </NextLink>
 
             <Link
-              onClick={() => router.push(`/Collab/Mycollab/${userId}`)}
+              onClick={() => router.push(`/Collab/Mycollab/${title}`)}
               color="textSecondary"
               underline="none"
               variant="subtitle2"
