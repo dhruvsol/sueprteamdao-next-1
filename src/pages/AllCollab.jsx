@@ -64,7 +64,7 @@ const AllCollab = ({ allcollab }) => {
           sx={{
             display: "flex",
             justifyContent: "flex-end",
-            paddingRight: "5rem",
+            paddingRight: "9rem",
           }}
         >
           <Stack sx={{ width: 300 }}>

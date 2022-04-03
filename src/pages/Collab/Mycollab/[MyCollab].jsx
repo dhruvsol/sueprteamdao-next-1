@@ -7,6 +7,7 @@ import { OffertoMe } from "../../../components/Collab/OffertoMe";
 import { CollabRequest } from "../../../components/Collab/CollabRequest";
 import { CollabGroup } from "../../../components/Collab/CollabGroup";
 import { JoinCollab } from "../../../components/Collab/JoinCollab";
+import CardCollab from "../../../components/Collab/Card";
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -40,7 +41,7 @@ function a11yProps(index) {
   };
 }
 
-const Mycollab = ({ data, offertome, accept }) => {
+const Mycollab = ({ data, offertome, accept, Myoffer }) => {
   const [value, setValue] = useState(0);
 
   const handleChange = (event, newValue) => {
@@ -67,6 +68,7 @@ const Mycollab = ({ data, offertome, accept }) => {
           <Tab label="Offered to me" {...a11yProps(0)} />
           <Tab label="Collab Requests" {...a11yProps(1)} />
           <Tab label="My collab groups" {...a11yProps(2)} />
+          <Tab label="My Offers" {...a11yProps(3)} />
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
@@ -122,6 +124,31 @@ const Mycollab = ({ data, offertome, accept }) => {
           );
         })}
       </TabPanel>
+      <TabPanel value={value} index={3}>
+        {/********** My Offers ***************** */}
+        {Myoffer.results.map(
+          ({ status, title, id, createdBy, description }) => {
+            return (
+              <>
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    paddingY: "2rem",
+                  }}
+                >
+                  <CardCollab
+                    id={id}
+                    Title={title}
+                    Description={description}
+                    Address={createdBy}
+                  />
+                </Box>
+              </>
+            );
+          }
+        )}
+      </TabPanel>
     </>
   );
 };
@@ -138,10 +165,14 @@ export async function getServerSideProps(context) {
   const res2 = await fetch(
     `https://intense-mesa-39554.herokuapp.com/v1/collaborators?status=accepted&user=${MyCollab}`
   );
+  const resoffer = await fetch(
+    `https://intense-mesa-39554.herokuapp.com/v1/collabs/?createdBy=${MyCollab}`
+  );
   const data = await res.json();
   const offertome = await res11.json();
   const accept = await res2.json();
-  console.log(data);
-  return { props: { data, offertome, accept } };
+  const Myoffer = await resoffer.json();
+
+  return { props: { data, offertome, accept, Myoffer } };
 }
 export default Mycollab;
