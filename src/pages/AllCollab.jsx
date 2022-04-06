@@ -20,6 +20,7 @@ const AllCollab = ({ allcollab }) => {
   const router = useRouter();
   const [filte, setFilter] = useState("All");
   const [newData, setNewData] = useState([]);
+  // const [test, setT] = useState(null);
   useEffect(() => {
     if (filte == "All") {
       setNewData(allcollab);
@@ -27,7 +28,7 @@ const AllCollab = ({ allcollab }) => {
       setNewData(allcollab.filter((collab) => collab.skills.includes(filte)));
     }
   }, [filte]);
-  console.log(newData);
+  // console.log(allcollab);
 
   const Skills = [
     {
@@ -64,7 +65,7 @@ const AllCollab = ({ allcollab }) => {
           sx={{
             display: "flex",
             justifyContent: "flex-end",
-            paddingRight: "9rem",
+            paddingRight: "11rem",
           }}
         >
           <Stack sx={{ width: 300 }}>
@@ -91,6 +92,7 @@ const AllCollab = ({ allcollab }) => {
             /> */}
           </Stack>
         </Box>
+
         {newData.map(
           ({ createdBy, id, skills, status, title, description }) => {
             return (
@@ -113,7 +115,8 @@ const AllCollab = ({ allcollab }) => {
 };
 export async function getServerSideProps(context) {
   const res = await fetch(
-    "https://intense-mesa-39554.herokuapp.com/v1/collabs"
+    // "https://intense-mesa-39554.herokuapp.com/v1/collabs"
+    "https://intense-mesa-39554.herokuapp.com/v1/collabs?limit=100?&status=open"
   );
   const data = await res.json();
   const allcollab = data.results;

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Typography,
   Box,
@@ -6,15 +6,16 @@ import {
   Dialog,
   Autocomplete,
   TextField,
+  Input,
   Tab,
   Tabs,
   Paper,
+  Stack,
 } from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import PropTypes from "prop-types";
 import CardCollab from "../../components/Collab/Card";
 import { MainNavbar } from "../../components/main-navbar";
-// import { Phot } from "./tanmay.jpg";
 import { OffertoMember } from "../../components/Collab/OffertoMember";
 import { JoinCollab } from "../../components/Collab/JoinCollab";
 import { useRouter } from "next/router";
@@ -56,15 +57,17 @@ const Collab = ({ data, openOffer, JoinOffers }) => {
   const [exist, setExist] = useState(false);
   const [offer, setOffer] = useState(false);
   const [value, setValue] = useState(0);
+  const [title, setTitle] = useState(" ");
+  const [description, setDescription] = useState(" ");
+  const [skills, setSkills] = useState([]);
+  const [hours, setHours] = useState(0);
+  const [collabs, setCollabId] = useState(null);
   const router = useRouter();
-  // console.log(router.query.Collab);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-  //////// main  ////////////
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
+
+  useEffect(() => {}, []);
   const handleClose = () => {
     setOpen(false);
     setOffer(false);
@@ -79,27 +82,39 @@ const Collab = ({ data, openOffer, JoinOffers }) => {
     setOpen(true);
   };
   //////// for offer ////////////
-  const handleOfferClose = () => {
-    setOffer(false);
-    setOpen(true);
-  };
+
   const handleOfferOpen = () => {
     setOffer(true);
     setOpen(false);
   };
-
-  const ExistOffer = [
-    { title: "City of God", year: 2002 },
-    { title: "Se7en", year: 1995 },
-    { title: "The Silence of the Lambs", year: 1991 },
-    { title: "It's a Wonderful Life", year: 1946 },
-    { title: "Life Is Beautiful", year: 1997 },
-    { title: "The Usual Suspects", year: 1995 },
-    { title: "Léon: The Professional", year: 1994 },
-    { title: "Spirited Away", year: 2001 },
-    { title: "Saving Private Ryan", year: 1998 },
-    { title: "Once Upon a Time in the West", year: 1968 },
-    { title: "American History X", year: 1998 },
+  const { Collab } = router.query;
+  const PostData = () => {
+    fetch("https://intense-mesa-39554.herokuapp.com/v1/collaborators/", {
+      method: "POST",
+      body: JSON.stringify({
+        collab: collabs,
+        commitHours: hours,
+        status: "offered",
+        user: Collab,
+      }),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    });
+  };
+  const Skills = [
+    {
+      id: "0",
+      skill: "Devloper",
+    },
+    {
+      id: "1",
+      skill: "Writer",
+    },
+    {
+      id: "2",
+      skill: "Designer",
+    },
   ];
   return (
     <>
@@ -180,112 +195,93 @@ const Collab = ({ data, openOffer, JoinOffers }) => {
           </Typography>
         </Paper>
       </Box>
-      <Dialog
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-        sx={{ padding: "3rem" }}
-      >
-        <Box
-          sx={{
-            width: "25rem",
-            height: "10rem",
-            display: "flex",
-            justifyContent: "space-evenly",
-            alignItems: "center",
-          }}
-        >
-          <Button
-            sx={{
-              "&:hover": {
-                color: "black",
-                backgroundColor: "rgb(250,180,25)",
-              },
-              backgroundColor: "#FACC15",
-              color: "black",
-            }}
-            variant="contained"
-            onClick={() => handleExistOpen()}
-          >
-            Select your existing offer
-          </Button>
-          <Button
-            sx={{
-              "&:hover": {
-                color: "black",
-                backgroundColor: "rgb(250,180,25)",
-              },
-              backgroundColor: "#FACC15",
-              color: "black",
-            }}
-            variant="contained"
-            onClick={() => handleOfferOpen()}
-          >
-            Create New Offer
-          </Button>
-        </Box>
-      </Dialog>
 
-      <Dialog
-        open={exist}
-        onClose={handleExistClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <Box
-          sx={{
-            width: "25rem",
-            height: "9rem",
-            display: "flex",
-            justifyContent: "center",
-          }}
-        >
-          <Autocomplete
-            sx={{ width: "21rem", paddingTop: "3rem" }}
-            id="tags-standard"
-            options={ExistOffer}
-            autoHighlight
-            getOptionLabel={(option) => option.title}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                variant="standard"
-                label="Existing Offer"
-                placeholder="Existing Offer"
-              />
-            )}
-          />
-        </Box>
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            paddingY: "2rem",
-          }}
-        >
-          <Button
-            sx={{
-              "&:hover": {
-                color: "black",
-                backgroundColor: "rgb(250,180,25)",
-              },
-              backgroundColor: "#FACC15",
-              color: "black",
-            }}
-            variant="contained"
-          >
-            Submit
-          </Button>
-        </Box>
-      </Dialog>
       <Dialog
         open={offer}
         onClose={handleClose}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <OffertoMember id={router.query.Collab} />
+        {/* <OffertoMember id={router.query.Collab} close={handleClose()} /> */}
+        <Box>
+          <Input
+            sx={{ padding: "1rem" }}
+            type="text"
+            placeholder="Title"
+            onChange={(e) => setTitle(e.target.value)}
+          />
+          <Input
+            focused
+            sx={{ padding: "1rem" }}
+            type="text"
+            placeholder="Description"
+            onChange={(e) => setDescription(e.target.value)}
+          />
+        </Box>
+        <Box sx={{ display: "flex" }}>
+          <Stack
+            spacing={3}
+            sx={{ width: "100%", overflow: "hidden", padding: "1rem" }}
+          >
+            <Autocomplete
+              multiple
+              id="tags-standard"
+              options={Skills}
+              getOptionLabel={(option) => option.skill}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  variant="standard"
+                  label="Skills"
+                  placeholder="Skills"
+                  onChange={(e) => setSkills(e.target.value)}
+                />
+              )}
+            />
+          </Stack>
+        </Box>
+        <Box sx={{ display: "flex" }}>
+          <Input
+            focused
+            sx={{ padding: "1rem" }}
+            type="text"
+            placeholder="CollabId"
+            onChange={(e) => setCollabId(e.target.value)}
+          />
+          <Input
+            focused
+            sx={{ padding: "1rem" }}
+            type="tel"
+            placeholder="Hours"
+            onChange={(e) => setHours(e.target.value)}
+          />
+        </Box>
+        <Box
+          sx={{
+            height: "6rem",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Button
+            variant="contained"
+            sx={{
+              "&:hover": {
+                color: "black",
+                backgroundColor: "rgb(250,180,25)",
+              },
+              backgroundColor: "#FACC15",
+              color: "black",
+            }}
+            onClick={() => {
+              PostData();
+              handleClose();
+            }}
+          >
+            Submit
+          </Button>
+        </Box>
       </Dialog>
       <Box sx={{ display: "flex", justifyContent: "center" }}>
         <Box sx={{ width: "100%", paddingLeft: "3rem" }}>
