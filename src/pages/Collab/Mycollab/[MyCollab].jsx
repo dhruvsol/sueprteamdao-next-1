@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Box, Tabs, Tab, Typography } from "@mui/material";
 
 import PropTypes from "prop-types";
@@ -6,8 +6,9 @@ import { MainNavbar } from "../../../components/main-navbar";
 import { OffertoMe } from "../../../components/Collab/OffertoMe";
 import { CollabRequest } from "../../../components/Collab/CollabRequest";
 import { CollabGroup } from "../../../components/Collab/CollabGroup";
-import { JoinCollab } from "../../../components/Collab/JoinCollab";
+import NotFound from "../../404";
 import CardCollab from "../../../components/Collab/Card";
+import { useRouter } from "next/router";
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -43,112 +44,125 @@ function a11yProps(index) {
 
 const Mycollab = ({ data, offertome, accept, Myoffer }) => {
   const [value, setValue] = useState(0);
-
+  const [page, setPage] = useState(false);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+  const router = useRouter();
+  useEffect(() => {
+    if (router.query.MyCollab === localStorage.getItem("currentUser")) {
+      setPage(true);
+    }
+    console.log(router.query.MyCollab);
+    console.log(localStorage.getItem("currentUser"));
+  }, []);
   return (
     <>
-      <MainNavbar />
-      <Box
-        sx={{
-          borderBottom: 1,
-          borderColor: "divider",
-          paddingTop: "5rem",
-          paddingLeft: "3rem",
-        }}
-      >
-        <Tabs
-          value={value}
-          onChange={handleChange}
-          aria-label="basic tabs example"
-          textColor="secondary"
-          indicatorColor="secondary"
-        >
-          <Tab label="Offered to me" {...a11yProps(0)} />
-          <Tab label="Collab Requests" {...a11yProps(1)} />
-          <Tab label="My collab groups" {...a11yProps(2)} />
-          <Tab label="My Offers" {...a11yProps(3)} />
-        </Tabs>
-      </Box>
-      <TabPanel value={value} index={0}>
-        {/*********** Offered to me ***************** */}
+      {page === false && <NotFound />}
+      {page && (
+        <>
+          <MainNavbar />
+          <Box
+            sx={{
+              borderBottom: 1,
+              borderColor: "divider",
+              paddingTop: "5rem",
+              paddingLeft: "3rem",
+            }}
+          >
+            <Tabs
+              value={value}
+              onChange={handleChange}
+              aria-label="basic tabs example"
+              textColor="secondary"
+              indicatorColor="secondary"
+            >
+              <Tab label="Offered to me" {...a11yProps(0)} />
+              <Tab label="Collab Requests" {...a11yProps(1)} />
+              <Tab label="My collab groups" {...a11yProps(2)} />
+              <Tab label="My Offers" {...a11yProps(3)} />
+            </Tabs>
+          </Box>
+          <TabPanel value={value} index={0}>
+            {/*********** Offered to me ***************** */}
 
-        {offertome.results.map(({ collab, commitHours, user, id }) => {
-          return (
-            <>
-              <Box key={id} sx={{ paddingY: "1rem" }}>
-                <OffertoMe
-                  id={id}
-                  collab={collab}
-                  commitHour={commitHours}
-                  address={user}
-                />
-              </Box>
-            </>
-          );
-        })}
-      </TabPanel>
-      <TabPanel value={value} index={1}>
-        {/********* *  Collab Requests ***************** */}
-        {data.results.map(({ collab, commitHours, user, id }) => {
-          return (
-            <>
-              <Box key={id} sx={{ paddingY: "1rem" }}>
-                <CollabRequest
-                  id={id}
-                  collab={collab}
-                  commitHour={commitHours}
-                  address={user}
-                />
-                {/* <JoinCollab /> */}
-              </Box>
-            </>
-          );
-        })}
-      </TabPanel>
-      <TabPanel value={value} index={2}>
-        {/**********  Groups ***************** */}
-        {accept.results.map(({ collab, commitHours, user, id }) => {
-          return (
-            <>
-              <Box sx={{ paddingY: "1rem" }} key={id}>
-                <CollabGroup
-                  id={id}
-                  collab={collab}
-                  commitHour={commitHours}
-                  address={user}
-                />
-              </Box>
-            </>
-          );
-        })}
-      </TabPanel>
-      <TabPanel value={value} index={3}>
-        {/********** My Offers ***************** */}
-        {Myoffer.results.map(
-          ({ status, title, id, createdBy, description }) => {
-            return (
-              <>
-                <Box
-                  sx={{
-                    display: "flex",
-                    justifyContent: "center",
-                    paddingY: "2rem",
-                  }}
-                >
-                  <CardCollab
-                    id={id}
-                    Title={title}
-                    Description={description}
-                    Address={createdBy}
-                  />
-                </Box>
-              </>
-            );
-          }
-        )}
-      </TabPanel>
+            {offertome.results.map(({ collab, commitHours, user, id }) => {
+              return (
+                <>
+                  <Box key={id} sx={{ paddingY: "1rem" }}>
+                    <OffertoMe
+                      id={id}
+                      collab={collab}
+                      commitHour={commitHours}
+                      address={user}
+                    />
+                  </Box>
+                </>
+              );
+            })}
+          </TabPanel>
+          <TabPanel value={value} index={1}>
+            {/********* *  Collab Requests ***************** */}
+            {data.results.map(({ collab, commitHours, user, id }) => {
+              return (
+                <>
+                  <Box key={id} sx={{ paddingY: "1rem" }}>
+                    <CollabRequest
+                      id={id}
+                      collab={collab}
+                      commitHour={commitHours}
+                      address={user}
+                    />
+                    {/* <JoinCollab /> */}
+                  </Box>
+                </>
+              );
+            })}
+          </TabPanel>
+          <TabPanel value={value} index={2}>
+            {/**********  Groups ***************** */}
+            {accept.results.map(({ collab, commitHours, user, id }) => {
+              return (
+                <>
+                  <Box sx={{ paddingY: "1rem" }} key={id}>
+                    <CollabGroup
+                      id={id}
+                      collab={collab}
+                      commitHour={commitHours}
+                      address={user}
+                    />
+                  </Box>
+                </>
+              );
+            })}
+          </TabPanel>
+          <TabPanel value={value} index={3}>
+            {/********** My Offers ***************** */}
+            {Myoffer.results.map(
+              ({ status, title, id, createdBy, description }) => {
+                return (
+                  <>
+                    <Box
+                      sx={{
+                        display: "flex",
+                        justifyContent: "center",
+                        paddingY: "2rem",
+                      }}
+                    >
+                      <CardCollab
+                        id={id}
+                        Title={title}
+                        Description={description}
+                        Address={createdBy}
+                      />
+                    </Box>
+                  </>
+                );
+              }
+            )}
+          </TabPanel>
+        </>
+      )}
     </>
   );
 };

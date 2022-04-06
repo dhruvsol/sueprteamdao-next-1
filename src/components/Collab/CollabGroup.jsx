@@ -9,28 +9,69 @@ import {
   Button,
 } from "@mui/material";
 export const CollabGroup = ({ collab, commitHour, address, id }) => {
-  const [b1, setB] = useState(null);
-  const [user, setUser] = useState(null);
-  const fetchData = async () => {
-    fetch(`https://intense-mesa-39554.herokuapp.com/v1/collabs/${collab}`)
-      .then((res) => res.json())
-      .then((data1) => setB(data1.createdBy));
+  const Done = () => {
+    fetch(`https://intense-mesa-39554.herokuapp.com/v1/collabs/${collab}`, {
+      method: "PATCH",
+      body: JSON.stringify({
+        status: "sucess",
+      }),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    });
+    fetch(`https://intense-mesa-39554.herokuapp.com/v1/collaborators/${id}`, {
+      method: "PATCH",
+      body: JSON.stringify({
+        status: "rejected",
+      }),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    });
   };
-  const fetchUsers = async () => {
-    const data = await fetch(
-      `https://intense-mesa-39554.herokuapp.com/v1/users/${b1}`
-    ).then((res) => res.json());
-    console.log(data);
+  const Close = () => {
+    fetch(`https://intense-mesa-39554.herokuapp.com/v1/collabs/${collab}`, {
+      method: "PATCH",
+      body: JSON.stringify({
+        status: "failed",
+      }),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    });
+    fetch(`https://intense-mesa-39554.herokuapp.com/v1/collaborators/${id}`, {
+      method: "PATCH",
+      body: JSON.stringify({
+        status: "rejected",
+      }),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    });
   };
-  useEffect(() => {
-    fetchData();
-    // fetchUsers();
-    fetch(`https://intense-mesa-39554.herokuapp.com/v1/users/${b1}`)
-      .then((res) => res.json())
-      .then((dat) => console.log(dat));
-  }, []);
-  console.log(b1);
-  console.log(user);
+  //  Function for XP Allocation
+  const fnMain = async () => {
+    const res = await fetch(
+      `https://intense-mesa-39554.herokuapp.com/v1/collabs/62304661a51798256081cc33`
+    );
+    const data = JSON.stringify(res);
+    console.log(data, res);
+    console.log(createdBy, members);
+    const { superXP, id } = fetch(
+      `https://intense-mesa-39554.herokuapp.com/v1/users/${createdBy}`
+    );
+    const newXp = superXP + 10;
+    console.log(superXP);
+    fetch(`https://intense-mesa-39554.herokuapp.com/v1/users/${id}`, {
+      method: "PATCH",
+      body: JSON.stringify({
+        superXP: newXp,
+      }),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    });
+  };
   return (
     <>
       <Box
@@ -80,7 +121,7 @@ export const CollabGroup = ({ collab, commitHour, address, id }) => {
               size="small"
               color="success"
               variant="outlined"
-              onClick={() => fnMain()}
+              onClick={() => Done()}
             >
               Done
             </Button>

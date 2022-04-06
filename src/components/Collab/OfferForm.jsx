@@ -25,7 +25,7 @@ export const OfferForm = ({ close }) => {
   ];
   const [title, setTitle] = useState(" ");
   const [description, setDescription] = useState(" ");
-  const [skills, setSkills] = useState(null);
+  const [skills, setSkills] = useState([]);
   const PostData = () => {
     fetch("https://intense-mesa-39554.herokuapp.com/v1/collabs/", {
       method: "POST",
