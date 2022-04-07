@@ -20,12 +20,14 @@ const AllCollab = ({ allcollab }) => {
   const router = useRouter();
   const [filte, setFilter] = useState("All");
   const [newData, setNewData] = useState([]);
-  // const [test, setT] = useState(null);
+
   useEffect(() => {
     if (filte == "All") {
-      setNewData(allcollab);
+      setNewData(allcollab.reverse());
     } else {
-      setNewData(allcollab.filter((collab) => collab.skills.includes(filte)));
+      setNewData(
+        allcollab.reverse().filter((collab) => collab.skills.includes(filte))
+      );
     }
   }, [filte]);
   // console.log(allcollab);

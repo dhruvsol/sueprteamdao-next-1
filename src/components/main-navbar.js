@@ -27,18 +27,17 @@ export const MainNavbar = (props) => {
   const [open, setOpen] = useState(false);
   const [title, setTitle] = useState(null);
   const [description, setDescription] = useState("");
-  const [skills, setSkill] = useState([]);
-  const [url, setUrl] = useState("");
+  const [skill, setSkill] = useState([]);
 
   // const userId = localStorage.getItem("currentUser");
   const PostData = () => {
-    fetch("https://intense-mesa-39554.herokuapp.com/v1/collabs/", {
+    fetch("http://localhost:5000/v1/collabs/", {
       method: "POST",
       body: JSON.stringify({
-        // createdBy:
         title: title,
         desciption: description,
-        skills: skills,
+        skills: skill,
+        createdBy: localStorage.getItem("currentUser"),
       }),
       headers: {
         "Content-type": "application/json; charset=UTF-8",
@@ -57,6 +56,7 @@ export const MainNavbar = (props) => {
     const userId = localStorage.getItem("currentUser");
     setTitle(userId);
   }, []);
+
   const Skills = [
     {
       id: "0",
@@ -193,7 +193,7 @@ export const MainNavbar = (props) => {
                 sx={{ width: "100%", overflow: "hidden", padding: "1rem" }}
               >
                 <Autocomplete
-                  multiple
+                  single
                   id="tags-standard"
                   options={Skills}
                   getOptionLabel={(option) => option.skill}
@@ -203,7 +203,6 @@ export const MainNavbar = (props) => {
                       variant="standard"
                       label="Skills"
                       placeholder="Skills"
-                      onChange={(e) => setSkills(e.target.value)}
                     />
                   )}
                 />
