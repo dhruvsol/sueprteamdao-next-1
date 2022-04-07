@@ -31,7 +31,7 @@ export const MainNavbar = (props) => {
 
   // const userId = localStorage.getItem("currentUser");
   const PostData = () => {
-    fetch("http://localhost:5000/v1/collabs/", {
+    fetch("https://intense-mesa-39554.herokuapp.com/v1/collabs/", {
       method: "POST",
       body: JSON.stringify({
         title: title,
