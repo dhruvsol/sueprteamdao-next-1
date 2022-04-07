@@ -172,6 +172,7 @@ const DetailCollab = ({ data }) => {
             >
               <Button
                 variant="contained"
+                onClick={() => handleClose()}
                 sx={{
                   "&:hover": {
                     color: "black",

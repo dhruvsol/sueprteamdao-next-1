@@ -1,4 +1,4 @@
-import React from "react";
+import { useState, useEffect } from "react";
 import {
   Box,
   Card,
@@ -8,7 +8,7 @@ import {
   CardActions,
   Button,
 } from "@mui/material";
-export const CollabGroup = ({ collab, commitHour, address, id, collabId }) => {
+export const CollabGroup = ({ collab, commitHour, address, id }) => {
   const Done = () => {
     fetch(`https://intense-mesa-39554.herokuapp.com/v1/collabs/${collab}`, {
       method: "PATCH",
@@ -72,9 +72,6 @@ export const CollabGroup = ({ collab, commitHour, address, id, collabId }) => {
       },
     });
   };
-
-  // console.log(JSON.stringify());
-  // console.log(createdBy);
   return (
     <>
       <Box

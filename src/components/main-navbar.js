@@ -11,6 +11,10 @@ import {
   Link,
   Toolbar,
   Dialog,
+  Input,
+  Stack,
+  Autocomplete,
+  TextField,
 } from "@mui/material";
 import { useRouter } from "next/router";
 import { Menu as MenuIcon } from "../icons/menu";
@@ -21,22 +25,52 @@ import { OfferForm } from "../components/Collab/OfferForm";
 export const MainNavbar = (props) => {
   const { onOpenSidebar } = props;
   const [open, setOpen] = useState(false);
-  const [title, setTitle] = useState("");
+  const [title, setTitle] = useState(null);
   const [description, setDescription] = useState("");
-  const [skills, setSkill] = useState("");
-  const [url, setUrl] = useState("");
+  const [skill, setSkill] = useState([]);
 
-  const userId = "62302ee3b9d20031f8cefa8d";
+  // const userId = localStorage.getItem("currentUser");
+  const PostData = () => {
+    fetch("https://intense-mesa-39554.herokuapp.com/v1/collabs/", {
+      method: "POST",
+      body: JSON.stringify({
+        title: title,
+        desciption: description,
+        skills: skill,
+        createdBy: localStorage.getItem("currentUser"),
+      }),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    });
+  };
   const handleClickOpen = () => {
     setOpen(true);
   };
   const handleClose = () => {
     setOpen(false);
   };
-
   const router = useRouter();
   const id = router.query.MyCollab;
+  useEffect(() => {
+    const userId = localStorage.getItem("currentUser");
+    setTitle(userId);
+  }, []);
 
+  const Skills = [
+    {
+      id: "0",
+      skill: "Devloper",
+    },
+    {
+      id: "1",
+      skill: "Writer",
+    },
+    {
+      id: "2",
+      skill: "Designer",
+    },
+  ];
   return (
     <AppBar
       elevation={0}
@@ -94,7 +128,7 @@ export const MainNavbar = (props) => {
             </NextLink>
 
             <Link
-              onClick={() => router.push(`/Collab/Mycollab/${userId}`)}
+              onClick={() => router.push(`/Collab/Mycollab/${title}`)}
               color="textSecondary"
               underline="none"
               variant="subtitle2"
@@ -138,7 +172,69 @@ export const MainNavbar = (props) => {
             aria-describedby="alert-dialog-description"
             sx={{ padding: "3rem" }}
           >
-            <OfferForm />
+            <Box>
+              <Input
+                sx={{ padding: "1rem" }}
+                type="text"
+                placeholder="Title"
+                onChange={(e) => setTitle(e.target.value)}
+              />
+              <Input
+                focused
+                sx={{ padding: "1rem" }}
+                type="text"
+                placeholder="Description"
+                onChange={(e) => setDescription(e.target.value)}
+              />
+            </Box>
+            <Box sx={{ display: "flex" }}>
+              <Stack
+                spacing={3}
+                sx={{ width: "100%", overflow: "hidden", padding: "1rem" }}
+              >
+                <Autocomplete
+                  single
+                  id="tags-standard"
+                  options={Skills}
+                  getOptionLabel={(option) => option.skill}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      variant="standard"
+                      label="Skills"
+                      placeholder="Skills"
+                    />
+                  )}
+                />
+              </Stack>
+            </Box>
+
+            <Box
+              sx={{
+                height: "6rem",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Button
+                variant="contained"
+                sx={{
+                  "&:hover": {
+                    color: "black",
+                    backgroundColor: "rgb(250,180,25)",
+                  },
+                  backgroundColor: "#FACC15",
+                  color: "black",
+                }}
+                onClick={() => {
+                  PostData();
+                  handleClose();
+                }}
+              >
+                Submit
+              </Button>
+            </Box>
           </Dialog>
         </Toolbar>
       </Container>

@@ -8,7 +8,7 @@ import {
   Button,
 } from "@mui/material";
 import { useRouter } from "next/router";
-export const OfferForm = () => {
+export const OfferForm = ({ close }) => {
   const Skills = [
     {
       id: "0",
@@ -25,7 +25,7 @@ export const OfferForm = () => {
   ];
   const [title, setTitle] = useState(" ");
   const [description, setDescription] = useState(" ");
-  const [skills, setSkills] = useState(null);
+  const [skills, setSkills] = useState([]);
   const PostData = () => {
     fetch("https://intense-mesa-39554.herokuapp.com/v1/collabs/", {
       method: "POST",
@@ -100,6 +100,7 @@ export const OfferForm = () => {
           }}
           onClick={() => {
             PostData();
+            close;
           }}
         >
           Submit

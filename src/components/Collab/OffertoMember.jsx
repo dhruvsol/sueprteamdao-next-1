@@ -8,7 +8,7 @@ import {
   Button,
 } from "@mui/material";
 import { useRouter } from "next/router";
-export const OffertoMember = ({ id }) => {
+export const OffertoMember = ({ id, close }) => {
   const Skills = [
     {
       id: "0",
@@ -122,6 +122,7 @@ export const OffertoMember = ({ id }) => {
           }}
           onClick={() => {
             PostData();
+            close;
           }}
         >
           Submit
