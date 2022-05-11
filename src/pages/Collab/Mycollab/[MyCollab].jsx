@@ -1,5 +1,14 @@
 import { useEffect, useState } from "react";
-import { Box, Tabs, Tab, Typography } from "@mui/material";
+import {
+  Box,
+  Tabs,
+  Tab,
+  Typography,
+  Button,
+  Dialog,
+  Input,
+  TextField,
+} from "@mui/material";
 
 import PropTypes from "prop-types";
 import { MainNavbar } from "../../../components/main-navbar";
@@ -45,6 +54,13 @@ function a11yProps(index) {
 const Mycollab = ({ data, offertome, accept, Myoffer }) => {
   const [value, setValue] = useState(0);
   const [page, setPage] = useState(false);
+  const [open, setOpen] = useState(false);
+  const handleopen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -62,6 +78,7 @@ const Mycollab = ({ data, offertome, accept, Myoffer }) => {
       {page && (
         <>
           <MainNavbar />
+
           <Box
             sx={{
               borderBottom: 1,
@@ -70,6 +87,88 @@ const Mycollab = ({ data, offertome, accept, Myoffer }) => {
               paddingLeft: "3rem",
             }}
           >
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "end",
+                paddingRight: "3rem",
+              }}
+            >
+              <Button
+                variant="contained"
+                sx={{
+                  "&:hover": {
+                    color: "black",
+                    backgroundColor: "rgb(250,180,25)",
+                  },
+                  backgroundColor: "#FACC15",
+                  color: "black",
+                }}
+                onClick={() => handleopen()}
+              >
+                Claim XP
+              </Button>
+              <Dialog
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+              >
+                {/* <OffertoMember id={router.query.Collab} close={handleClose()} /> */}
+                <Box>
+                  <Input
+                    sx={{ padding: "1rem" }}
+                    type="text"
+                    placeholder="Invested Hours"
+                  />
+
+                  <Input
+                    focused
+                    sx={{ padding: "1rem" }}
+                    type="text"
+                    placeholder="CollabId"
+                  />
+                </Box>
+
+                <Box>
+                  <TextField
+                    sx={{ width: "100%" }}
+                    multiline
+                    rows={3}
+                    placeholder="Important links"
+                  />
+                  <TextField
+                    sx={{ width: "100%" }}
+                    multiline
+                    rows={3}
+                    placeholder="Your contribution"
+                  />
+                </Box>
+                <Box
+                  sx={{
+                    height: "6rem",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <Button
+                    variant="contained"
+                    sx={{
+                      "&:hover": {
+                        color: "black",
+                        backgroundColor: "rgb(250,180,25)",
+                      },
+                      backgroundColor: "#FACC15",
+                      color: "black",
+                    }}
+                    onClick={() => handleClose()}
+                  >
+                    Submit
+                  </Button>
+                </Box>
+              </Dialog>
+            </Box>
             <Tabs
               value={value}
               onChange={handleChange}
