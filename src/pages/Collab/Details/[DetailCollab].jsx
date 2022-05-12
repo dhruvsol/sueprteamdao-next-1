@@ -14,6 +14,9 @@ import { GetName } from "../../../components/Collab/GetName";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 const DetailCollab = ({ data }) => {
   const [open, setOpen] = useState(false);
+  const [hours, setHours] = useState(0);
+  const [contri, setcontri] = useState("");
+  const [collab, setCollab] = useState("");
   const router = useRouter();
 
   const handleClickOpen = () => {
@@ -22,8 +25,22 @@ const DetailCollab = ({ data }) => {
   const handleClose = () => {
     setOpen(false);
   };
-
-  const fetchName = () => {};
+  console.log(data.id);
+  const PostData = () => {
+    fetch("https://intense-mesa-39554.herokuapp.com/v1/collaborators/", {
+      method: "POST",
+      body: JSON.stringify({
+        collab: data.id,
+        commitHours: hours,
+        note: contri,
+        status: "requested",
+        user: localStorage.getItem("currentUser"),
+      }),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    });
+  };
   return (
     <>
       <MainNavbar />
@@ -160,8 +177,14 @@ const DetailCollab = ({ data }) => {
                 height: "12rem",
               }}
             >
-              <TextField placeholder="How will you contribute?" />
-              <TextField placeholder="How much hrs can u put?" />
+              <TextField
+                onChange={(e) => setcontri(e.target.value)}
+                placeholder="How will you contribute?"
+              />
+              <TextField
+                onChange={(e) => setHours(parseInt(e.target.value))}
+                placeholder="How much hrs can u put?"
+              />
             </Box>
             <Box
               sx={{
@@ -172,7 +195,10 @@ const DetailCollab = ({ data }) => {
             >
               <Button
                 variant="contained"
-                onClick={() => handleClose()}
+                onClick={() => {
+                  handleClose();
+                  PostData();
+                }}
                 sx={{
                   "&:hover": {
                     color: "black",
